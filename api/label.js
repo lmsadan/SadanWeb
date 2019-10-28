@@ -1,10 +1,10 @@
-import request from '@/utils/request'
+import { request } from '@/utils/request'
 const groupName = 'base'
 const apiName = 'label'
 export default {
-  toplist () {
+  topList () {
     return request({
-      url: `/${groupName}/${apiName}/toplist`,
+      url: `/${groupName}/${apiName}`,
       method: 'get'
     })
   }

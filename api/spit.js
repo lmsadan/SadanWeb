@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import { request } from '@/utils/request'
 const groupName = 'spit'
 const apiName = 'spit'
 export default {
@@ -15,16 +15,17 @@ export default {
       method: 'get'
     })
   },
-  commentlist (id) {
+  commentList (parentId, page, size) {
     return request({
-      url: `/${groupName}/${apiName}/commentlist/${id}`,
+      url: `/${groupName}/${apiName}/comment/${parentId}/${page}/${size}`,
       method: 'get'
     })
   },
-  thumbup (id) {
+  thumbup (textId, userId) {
     return request({
-      url: `/${groupName}/${apiName}/thumbup/${id}`,
-      method: 'put'
+      url: `/${groupName}/${apiName}/thumbup/${textId}`,
+      method: 'put',
+      data: { userId }
     })
   },
   save (pojo) {

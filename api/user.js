@@ -1,21 +1,27 @@
-import request from '@/utils/request'
+import { requestF } from '@/utils/request'
 const groupName = 'user'
 const apiName = 'user'
+
 export default {
   sendsms (mobile) {
-    return request({
+    return requestF({
       url: `/${groupName}/${apiName}/sendsms/${mobile}`,
-      method: 'put'
-    })
-  },
-  register (user, code) {
-    return request({
-      url: `/${groupName}/${apiName}/register/${code}`,
       method: 'post'
     })
   },
+  register (user, code) {
+    return requestF({
+      url: `/${groupName}/${apiName}/register/${code}`,
+      method: 'post',
+      data: {
+        mobile: user.mobile,
+        password: user.password,
+        nickname: user.nickname
+      }
+    })
+  },
   login (mobile, password) {
-    return request({
+    return requestF({
       url: `/${groupName}/${apiName}/login`,
       method: 'post',
       data: {
@@ -25,13 +31,13 @@ export default {
     })
   },
   info () {
-    return request({
+    return requestF({
       url: `/${groupName}/${apiName}/info`,
       method: 'get'
     })
   },
   saveinfo (user) {
-    return request({
+    return requestF({
       url: `/${groupName}/${apiName}/saveinfo`,
       method: 'put',
       data: user

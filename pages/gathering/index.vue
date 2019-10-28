@@ -50,7 +50,11 @@ export default {
   asyncData () {
     return gatheringApi.search(1, 12, { state: '1' }).then((res) => {
       return { items: res.data.data.rows }
-    }).catch((res) => {})
+    }).catch((res) => {
+      return {
+        items: ''
+      }
+    })
   },
   methods: {
 

@@ -30,8 +30,10 @@
             <form class="sui-form sui-form pull-left">
               <input type="text" placeholder="输入关键词...">
             </form>
-            <div v-if="1" class="sui-nav pull-right info">
-              <li><a target="_blank" class="notice" @click="noticeClick">通知</a></li>
+            <div v-if="user.token !== undefined" class="sui-nav pull-right info">
+              <li><a class="notice">{{ user.nickname }}</a></li>
+              <li><a class="notice" @click="logout()">退出登录</a></li>
+              <li><a target="_blank" class="notice">通知</a></li>
               <li class="hover">
                 <span class="fa fa-plus " />
                 <ul class="hoverinfo">
@@ -41,11 +43,15 @@
                   <li><i class="fa fa-heartbeat" aria-hidden="true" /> <a href="~/assetsmakeFriends-submit.html" target="_blank">发约会</a></li>
                 </ul>
               </li>
-              <li><a href="~/assetsperson-homepage.html" target="_blank" class="homego"><img width="18%" src="https://img03.sogoucdn.com/app/a/100520093/dbc006c92ca7e754-8079a6fac653bad5-1f51ab8e53b21b7911e9aeca0d6505cb.jpg" alt="用户头像"></a></li>
+              <li><a href="/home"><img class="indexImg" :src="user.image" :alt="user.nickname"></a></li>
             </div>
             <div v-else class="sui-nav pull-right info">
-              <li><a href="~/assetsperson-loginsign.html" target="_blank">注册</a></li>
-              <li><a href="~/assetsperson-loginsign.html" target="_blank" class="sui-btn btn-login">登录</a></li>
+              <nuxt-link tag="li" to="login">
+                <a>注册</a>
+              </nuxt-link>
+              <nuxt-link tag="li" to="login">
+                <a class="sui-btn btn-login">登录</a>
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -59,22 +65,22 @@
             <div class="link">
               <dl>
                 <dt>网站相关</dt>
-                <dd>关于我们</dd>
-                <dd>服务条款</dd>
-                <dd>帮助中心</dd>
+                <dd><a>关于我们</a></dd>
+                <dd><a>服务条款</a></dd>
+                <dd><a>帮助中心</a></dd>
               </dl>
               <dl>
                 <dt>常用链接</dt>
               </dl>
               <dl>
                 <dt>联系我们</dt>
-                <dd>联系我们</dd>
-                <dd>加入我们</dd>
-                <dd>建议反馈</dd>
+                <dd><a>联系我们</a></dd>
+                <dd><a>加入我们</a></dd>
+                <dd><a>建议反馈</a></dd>
               </dl>
               <dl>
                 <dt>关注我们</dt>
-                <dd>微博</dd>
+                <dd><a>微博</a></dd>
               </dl>
 
               <div class="xuke">
@@ -99,9 +105,27 @@ import '~/assets/plugins/sui/sui-append.min.css'
 import '~/assets/plugins/font-awesome/css/font-awesome.min.css'
 import '~/assets/css/widget-base.css'
 import '~/assets/css/widget-head-foot.css'
+import { getUser, removeUser } from '@/utils/auth'
 export default {
-
+  data () {
+    return {
+      user: {}
+    }
+  },
+  mounted () {
+    this.user = getUser()
+  },
+  methods: {
+    logout () {
+      removeUser()
+      location.href = '/'
+    }
+  }
 }
 </script>
 <style>
+  .indexImg{
+    height: 45px;
+    width: 45px;
+  }
 </style>

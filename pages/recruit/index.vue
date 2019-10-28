@@ -59,7 +59,7 @@
           </div>
           <ul class="yui3-g company" style="display:block;">
             <li v-for="(item,index) in hotList" :key="index" class="yui3-u-1-3 company-item">
-              <p><img :src="item.logo" class="sizeImg" alt=""></p>
+              <p><img :src="item.logo" class="sizeImgRecruit" alt=""></p>
               <p class="title">
                 {{ item.name }}
               </p>
@@ -90,13 +90,19 @@ export default {
           hotList: hotList.data.data
         }
       })
-    )
+    ).catch((res) => {
+      return {
+        recommendList: '',
+        newList: '',
+        hotList: ''
+      }
+    })
   }
 }
 </script>
 
 <style>
-  .sizeImg{
+  .sizeImgRecruit{
     width: 50px;
     height: 50px;
   }

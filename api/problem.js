@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import { request } from '@/utils/request'
 const groupName = 'qa'
 const apiName = 'problem'
 export default {
