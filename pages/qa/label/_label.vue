@@ -6,13 +6,13 @@
           <div class="tab-bottom-line">
             <ul class="sui-nav nav-tabs">
               <li :class="type=='new'?'active':''">
-                <a @click="type='new'">最新回答</a>
+                <a @click="type='new'">最新问答</a>
               </li>
               <li :class="type=='hot'?'active':''">
-                <a @click="type='hot'">热门回答</a>
+                <a @click="type='hot'">热门问答</a>
               </li>
               <li :class="type=='wait'?'active':''">
-                <a @click="type='wait'">等待回答</a>
+                <a @click="type='wait'">等待问答</a>
               </li>
             </ul>
             <div class="qa-list">

@@ -82,6 +82,10 @@ export default {
   asyncData ({ params }) {
     return gatheringApi.findById(params.id).then((res) => {
       return { item: res.data.data }
+    }).catch((res) => {
+      return {
+        items: ''
+      }
     })
   },
   head: {

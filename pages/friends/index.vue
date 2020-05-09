@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="banner">
+    <!-- <div class="banner">
       <div class="wrapper">
         <img src="~/assets/img/page-banner.png" alt="">
       </div>
-    </div>
+    </div> -->
     <div class="wrapper tag-item">
       <div class="fl left-list">
         <p class="full-info">

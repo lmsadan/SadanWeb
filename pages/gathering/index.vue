@@ -24,7 +24,7 @@
                   <p>城市：{{ item.city }}</p>
                 </div>
                 <div class="fr btn">
-                  <span class="sui-btn btn-bao">立即报名</span>
+                  <a target="_blank" :href="'/gathering/item/'+item.id" class="sui-btn btn-bao">立即报名</a>
                 </div>
                 <div class="clearfix" />
               </div>

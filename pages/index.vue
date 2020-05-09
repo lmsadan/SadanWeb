@@ -21,19 +21,8 @@
         <div class="fl middle">
           <div class="carousel">
             <div id="myCarousel" data-ride="carousel" data-interval="4000" class="sui-carousel slide">
-              <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active" />
-                <li data-target="#myCarousel" data-slide-to="1" />
-                <li data-target="#myCarousel" data-slide-to="2" />
-              </ol>
               <div class="carousel-inner">
-                <div class="active item">
-                  <img src="~/assets/img/widget-banner01.png">
-                </div>
-                <div class="item">
-                  <img src="~/assets/img/widget-banner02.png">
-                </div>
-                <div class="item">
+                <div class="item active">
                   <img src="~/assets/img/widget-banner01.png">
                 </div>
               </div>
@@ -41,16 +30,16 @@
           </div>
           <div class="data-list">
             <ul id="headline" class="headline fixed">
-              <li class="headline-item">
+              <li v-for="(item,index) in articleList" :key="index" class="headline-item">
                 <div class="fl indexImg">
                   <img src="">
                 </div>
                 <div class="words">
-                  <h3>Drive.ai融资5000万吴恩达加入董事会 <span><img src="" class="vip"></span></h3>
+                  <h3>{{ item.title }} <span><img src="" class="vip"></span></h3>
                   <h5 class="author">
                     <div class="fl">
-                      <span class="authorName"> <img src="~/assets/img/widget-photo.png" alt=""> 玻璃通 </span>
-                      <span>6月22日 12:01</span>
+                      <span class="authorName"> <img :src="item.image" alt=""> {{ item.userid }} </span>
+                      <span>{{ item.createtime | formatDate }}</span>
                     </div>
                     <div class="fr attention">
                       <span class="attentionText">关注</span>
@@ -59,28 +48,7 @@
                     <div class="clearfix" />
                   </h5>
                 </div> <p class="content">
-                  滴滴与360都开源了各自的插件化框架，VirtualAPK与RePlugin,作为一个插件化方面的狂热研究者，在周末就迫不及待的下载了Virtualapk框架来进行研究，本篇博客带的……
-                </p>
-              </li>
-              <li class="headline-item">
-                <div class="fl indexImg">
-                  <img src="">
-                </div>
-                <div class="words">
-                  <h3>Drive.ai融资5000万吴恩达加入董事会 <span><img src="~/assets/img/widget-vip.png" class="vip"></span></h3>
-                  <h5 class="author">
-                    <div class="fl">
-                      <span class="authorName"> <img src="~/assets/img/widget-photo.png" alt=""> 玻璃通 </span>
-                      <span>6月12日 13：34</span>
-                    </div>
-                    <div class="fr attention">
-                      <span class="attentionText">关注</span>
-                      <span class="beforeclose"> <i class="fa fa-times delete" aria-hidden="true" /> <i class="nolike">不感兴趣</i> </span>
-                    </div>
-                    <div class="clearfix" />
-                  </h5>
-                </div> <p class="content">
-                  滴滴与360都开源了各自的插件化框架，VirtualAPK与RePlugin,作为一个插件化方面的狂热研究者，在周末就迫不及待的下载了Virtualapk框架来进行研究，本篇博客带的……
+                  {{ item.content }}
                 </p>
               </li>
             </ul>
@@ -109,27 +77,6 @@
                   滴滴与360都开源了各自的插件化框架，VirtualAPK与RePlugin,作为一个插件化方面的狂热研究者，在周末就迫不及待的下载了Virtualapk框架来进行研究，本篇博客带的……
                 </p>
               </li>
-              <li class="headline-item">
-                <div class="fl indexImg">
-                  <img src="">
-                </div>
-                <div class="words">
-                  <h3>Drive.ai融资5000万吴恩达加入董事会 <span><img src="~/assets/img/widget-vip.png" class="vip"></span></h3>
-                  <h5 class="author">
-                    <div class="fl">
-                      <span class="authorName"> <img src="~/assets/img/widget-photo.png" alt=""> 玻璃通 </span>
-                      <span>6月12日 13：34</span>
-                    </div>
-                    <div class="fr attention">
-                      <span class="attentionText">关注</span>
-                      <span class="beforeclose"> <i class="fa fa-times delete" aria-hidden="true" /> <i class="nolike">不感兴趣</i> </span>
-                    </div>
-                    <div class="clearfix" />
-                  </h5>
-                </div> <p class="content">
-                  滴滴与360都开源了各自的插件化框架，VirtualAPK与RePlugin,作为一个插件化方面的狂热研究者，在周末就迫不及待的下载了Virtualapk框架来进行研究，本篇博客带的……
-                </p>
-              </li>
             </ul>
             <ul id="loaded" class="headline" />
           </div>
@@ -138,10 +85,10 @@
         <div class="fl right">
           <div class="activity">
             <div class="acti">
-              <img src="~/assets/img/widget-activity01.png" alt="活动一">
+              <img src="~/assets/img/widget-activity01.jpg" alt="活动一">
             </div>
             <div class="acti">
-              <img src="~/assets/img/widget-activity02.png" alt="活动一">
+              <img src="~/assets/img/widget-activity02.jpg" alt="活动一">
             </div>
           </div>
           <div class="block-btn">
@@ -293,8 +240,22 @@
 
 <script>
 import '~/assets/css/page-headline-logined.css'
+import articleApi from '@/api/article'
+import { formatDate } from '@/utils/tools'
 export default {
-
+  filters: {
+    formatDate (time) {
+      const date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
+    }
+  },
+  asyncData () {
+    return articleApi.getList().then((res) => {
+      return { articleList: res.data.data }
+    }).catch((res) => {
+      return { articleList: '' }
+    })
+  }
 }
 </script>
 
